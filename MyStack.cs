@@ -8,14 +8,14 @@ namespace POSTFIX
 {
     internal class MyStack
     {
-        private int top;
-        private string[] stack;
+        public int top;
+        public string[] contents;
         private int size;
 
         public MyStack(int size)
         {
             this.size = size;
-            stack = new string[size];
+            contents = new string[size];
             top = -1;
         }
 
@@ -28,7 +28,7 @@ namespace POSTFIX
             else
             {
                 top++;
-                stack[top] = item;
+                contents[top] = item;
             }
         }
 
@@ -41,7 +41,7 @@ namespace POSTFIX
             }
             else
             {
-                string item = stack[top];
+                string item = contents[top];
                 top--;
                 return item;
             }
@@ -56,7 +56,7 @@ namespace POSTFIX
             }
             else
             {
-                return stack[top];
+                return contents[top];
             }
         }
 

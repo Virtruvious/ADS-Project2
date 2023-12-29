@@ -33,7 +33,7 @@ namespace POSTFIX
 
         static List<string> InfixToPostfix(List<string> input)
         {
-            Stack<string> stack = new();
+            MyStack stack = new(100);
             stack.Push("#");
 
             List<string> output = new List<string>();
@@ -43,9 +43,9 @@ namespace POSTFIX
                 switch (a)
                 {
                     case "#": // Empty stack
-                        foreach (string b in stack)
+                        for (int i = stack.top; i >= 0; i--)
                         {
-                            output.Add(b);
+                            output.Add(stack.contents[i]);
                         }
 
                         break;
@@ -109,7 +109,8 @@ namespace POSTFIX
         static string EvaluatePostFix(List<string> input)
         {
             input.Remove("#");
-            Stack<string> stack = new();
+            //Stack<string> stack = new();
+            MyStack stack = new(100);
             Dictionary<string, string> variables = new();
 
             foreach (string a in input)
@@ -140,7 +141,7 @@ namespace POSTFIX
                     {
                         stack.Pop();
                         double op2 = num;
-                        double op1 = stack.Count == 0 ? 0 : double.Parse(stack.Pop()); // Fail safe for negative values
+                        double op1 = stack.contents.Length == 0 ? 0 : double.Parse(stack.Pop()); // Fail safe for negative values
 
                         switch (a)
                         {
@@ -185,7 +186,7 @@ namespace POSTFIX
                         string op1 = "F";
                         if (a != "!")
                         {
-                            op1 = stack.Count == 0 ? "F" : stack.Pop(); // Fail safe for empty stack
+                            op1 = stack.contents.Length == 0 ? "F" : stack.Pop(); // Fail safe for empty stack
                         }
 
                         switch (a)
